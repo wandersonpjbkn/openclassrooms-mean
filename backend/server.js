@@ -1,3 +1,6 @@
+// env
+require('dotenv').config()
+
 // external
 const http = require('http')
 

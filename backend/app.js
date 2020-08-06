@@ -1,8 +1,27 @@
+// env
+require('dotenv').config()
+
 // external
 const express = require('express')
+const mongoose = require('mongoose')
 const { json } = require('body-parser')
 
 const app = express()
+
+mongoose
+  .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`, {
+    w: 'majority',
+    retryWrites: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  })
+  .then(() => {
+    console.log('Successfully connected to MongoDB Atlas')
+  })
+  .catch(err => {
+    console.log('Unable to connect to MongoDB Atlas')
+    console.error(err)
+  })
 
 app.use(json())
 
