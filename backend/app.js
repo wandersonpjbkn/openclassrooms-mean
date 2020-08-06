@@ -6,6 +6,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const { json } = require('body-parser')
 
+// internal
+const Thing = require('./models/thing')
+
 const app = express()
 
 mongoose
@@ -33,43 +36,56 @@ app.use((req, res, next) => {
 })
 
 app.post('/api/stuff', (req, res, next) => {
-  console.log(req.body)
-  res
-    .status(201)
-    .json({ message: 'Thing created successfully' })
+  const thing = new Thing({
+    title: req.body.title,
+    description: req.body.description,
+    imageUrl: req.body.imageUrl,
+    price: req.body.price,
+    userId: req.body.userId
+  })
+
+  thing
+    .save()
+    .then(() => {
+      res
+        .status(201)
+        .json({ message: 'Post saved successfully' })
+    })
+    .catch(err => {
+      res
+        .status(400)
+        .json({ err: err })
+    })
+})
+
+app.get('/api/stuff/:id', (req, res, next) => {
+  Thing
+    .findOne({ _id: req.params.id })
+    .then(thing => {
+      res
+        .status(200)
+        .json(thing)
+    })
+    .catch(err => {
+      res
+        .status(400)
+        .json({ err: err })
+    })
 })
 
 app.use('/api/stuff', (req, res, next) => {
-  const stuff = [
-    {
-      _id: 'quwiquwiuq',
-      title: 'My first thing',
-      description: 'All the info about my first thing',
-      imageUrl: 'https://source.unsplash.com/weekly?tech',
-      price: 8500,
-      userId: 'qoeiqoewi'
-    },
-    {
-      _id: 'zxcmzncmzn',
-      title: 'My second thing',
-      description: 'All the info about my second thing',
-      imageUrl: 'https://source.unsplash.com/weekly?trip',
-      price: 4700,
-      userId: 'lgkjglhkj'
-    },
-    {
-      _id: 'falkfnakl',
-      title: 'My third thing',
-      description: 'All the info about my third thing',
-      imageUrl: 'https://source.unsplash.com/weekly?city',
-      price: 8900,
-      userId: 'aldaasdad'
-    }
-  ]
-
-  res
-    .status(200)
-    .json(stuff)
+  Thing
+    .find()
+    .then(things => {
+      res
+        .status(200)
+        .json(things)
+    })
+    .catch(err => {
+      res
+        .status(400)
+        .json({ err: err })
+    })
 })
 
 module.exports = app
