@@ -1,5 +1,6 @@
 // external
 const express = require('express')
+const path = require('path')
 const { json } = require('body-parser')
 
 // internal
@@ -13,6 +14,8 @@ const app = express()
 const route = '/api'
 
 app.use(json())
+
+app.use('/src/assets/imgs', express.static(path.join(__dirname, 'assets', 'imgs')))
 
 // routes
 app.use(cors)
