@@ -5,19 +5,21 @@ const router = express.Router()
 // internal
 const controller = require('../controllers/stuff')
 
+const route = '/stuff'
+
 // create
-router.post('/api/stuff/', controller.createStuff)
+router.post(`${route}/`, controller.createStuff)
 
 // get all
-router.get('/api/stuff/', controller.getStuffs)
+router.get(`${route}/`, controller.getStuffs)
 
 // get one
-router.get('/api/stuff/:id', controller.getOneStuff)
+router.get(`${route}/:id`, controller.getOneStuff)
 
 // update
-router.put('/api/stuff/:id', controller.updateStuff)
+router.put(`${route}/:id`, controller.updateStuff)
 
 // delete
-router.delete('/api/stuff/:id', controller.deleteStuff)
+router.delete(`${route}/:id`, controller.deleteStuff)
 
 module.exports = router
