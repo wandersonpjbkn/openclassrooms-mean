@@ -1,3 +1,6 @@
+// external
+const fs = require('fs')
+
 // internal 
 const Thing = require('../models/thing')
 
@@ -63,7 +66,7 @@ module.exports = {
   },
 
   updateStuff: (req, res) => {
-    let thing = new Thing({ _id: req.params._id })
+    let thing = new Thing({ _id: req.params.id })
 
     if (req.file) {
       const url = `${req.protocol}://${req.get('host')}`
@@ -105,17 +108,26 @@ module.exports = {
   },
 
   deleteStuff: (req, res) => {
-    Thing.deleteOne({ _id: req.params.id })
-    .then(() => {
-      res
-        .status(200)
-        .json({ message: 'Thing deleted successfully' })
-    })
-    .catch(err => {
-      res
-        .status(400)
-        .json({ err: err })
-    })
-    .finally(() => { console.log('delete stuff finished') })
+    Thing
+      .findOne({_id: req.params.id })
+      .then(thing => {
+        const filename = thing.imageUrl.split('/imgs/')[1]
+
+        fs.unlink(`src/assets/imgs/${filename}`, () => {
+          Thing
+            .deleteOne({ _id: req.params.id })
+            .then(() => {
+              res
+                .status(200)
+                .json({ message: 'Thing deleted successfully' })
+            })
+            .catch(err => {
+              res
+                .status(400)
+                .json({ err: err })
+            })
+            .finally(() => { console.log('delete stuff finished') })
+        })
+      })
   }
 }
