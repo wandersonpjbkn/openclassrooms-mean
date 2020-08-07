@@ -58,7 +58,7 @@ module.exports = {
             res
               .status(200)
               .json({
-                userID: user._id,
+                userId: user._id,
                 token: token
               })
           })

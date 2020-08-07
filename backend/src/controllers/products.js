@@ -22,7 +22,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('product created') })
+      .finally(() => { console.log('create product finished') })
   },
 
   getProducts: (req, res) => {
@@ -38,7 +38,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('products getted') })
+      .finally(() => { console.log('get all products finished') })
   },
 
   getOneProduct: (req, res) => {
@@ -54,7 +54,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('product getted') })
+      .finally(() => { console.log('get one product finished') })
   },
 
   updateProduct: (req, res) => {
@@ -78,7 +78,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('product updated') })
+      .finally(() => { console.log('update product finished') })
   },
   
   deleteProduct: (req, res) => {
@@ -93,6 +93,6 @@ module.exports = {
         .status(400)
         .json({ err: err })
     })
-    .finally(() => { console.log('product deleted') })
+    .finally(() => { console.log('delete product finished') })
   }
 }

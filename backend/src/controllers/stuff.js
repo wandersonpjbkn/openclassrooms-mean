@@ -23,7 +23,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('stuff created') })
+      .finally(() => { console.log('create stuff finished') })
   },
 
   getStuffs: (req, res) => {
@@ -39,7 +39,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('stuffs getted') })
+      .finally(() => { console.log('get all stuffs finished') })
   },
 
   getOneStuff: (req, res) => {
@@ -55,7 +55,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('stuff getted') })
+      .finally(() => { console.log('get one stuff finished') })
   },
 
   updateStuff: (req, res) => {
@@ -80,7 +80,7 @@ module.exports = {
           .status(400)
           .json({ err: err })
       })
-      .finally(() => { console.log('stuff updated') })
+      .finally(() => { console.log('update stuff finished') })
   },
 
   deleteStuff: (req, res) => {
@@ -95,6 +95,6 @@ module.exports = {
         .status(400)
         .json({ err: err })
     })
-    .finally(() => { console.log('stuff deleted') })
+    .finally(() => { console.log('delete stuff finished') })
   }
 }
