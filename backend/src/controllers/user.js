@@ -1,5 +1,9 @@
+// env
+require('dotenv').config()
+
 // external
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // internal 
 const User = require('../models/user')
@@ -45,11 +49,17 @@ module.exports = {
               err: new Error('Invalid password!')
             })
 
+            const token = jwt.sign(
+              { userId: user._id },
+              process.env.SECRET_TOKEN,
+              { expiresIn: '24h' }
+            )
+
             res
               .status(200)
               .json({
                 userID: user._id,
-                token: 'token'
+                token: token
               })
           })
           .catch(err => {
